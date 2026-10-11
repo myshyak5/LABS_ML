@@ -52,7 +52,8 @@ def least_squares(x, y):
     x = np.asarray(x, dtype=float)
     y = np.asarray(y, dtype=float)
     n = len(x)
-    sum_x, sum_y = x.sum(), y.sum()
+    sum_x = x.sum()
+    sum_y = y.sum()
     sum_xx = (x * x).sum()
     sum_xy = (x * y).sum()
     a = (n * sum_xy - sum_x * sum_y) / (n * sum_xx - sum_x * sum_x)
@@ -78,13 +79,13 @@ def draw_squares(ax, x, y, residuals, k):
         side_y = abs(ri)
         side_x = side_y * k
         y_bottom = min(yi, yi - ri)
-        rect = plt.Rectangle(
+        rectangle = plt.Rectangle(
             (xi - side_x / 2, y_bottom),
             side_x, side_y,
             facecolor=SQ_COLOR_PAD, edgecolor=SQ_COLOR_MAR,
             alpha=0.5, hatch="///"
         )
-        ax.add_patch(rect)
+        ax.add_patch(rectangle)
     
 def main(filename):
     headers, columns = read_csv(filename)
