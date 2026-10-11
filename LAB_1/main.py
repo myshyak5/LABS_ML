@@ -22,7 +22,7 @@ def read_csv(filename):
     return headers, columns
 
 def print_stats(columns):
-    print(f"{'Столбец':<20}{'N':>6}{'min':>12}{'max':>12}{'mean':>12}")
+    print(f"\n{'Столбец':<20}{'N':>6}{'min':>12}{'max':>12}{'mean':>12}")
     print("-" * 62)
     for name, data in columns.items():
         arr = np.array(data)
@@ -43,8 +43,9 @@ def choose_columns(headers):
         except ValueError:
             print("Нужно ввести целое число.")
             continue
-        if xi == yi or not (0 <= xi < len(headers)) or not (0 <= yi < len(headers)):
-            print(f"Номера должны быть разными и в диапазоне от 0 до {len(headers) - 1}.")
+        n = len(headers)
+        if xi == yi or not (0 <= xi < n) or not (0 <= yi < n):
+            print(f"Номера должны быть разными и в диапазоне от 0 до {n - 1}.")
             continue
         return headers[xi], headers[yi]
 
@@ -86,7 +87,12 @@ def draw_squares(ax, x, y, residuals, k):
             alpha=0.5, hatch="///"
         )
         ax.add_patch(rectangle)
-    
+
+def get_filename():
+    if len(sys.argv) > 1:
+        return sys.argv[1]
+    return input("Введите имя файла (Enter - lab1_DS.csv): ") or "lab1_DS.csv"
+
 def main(filename):
     headers, columns = read_csv(filename)
     print_stats(columns)
@@ -126,5 +132,9 @@ def main(filename):
 
 
 if __name__ == "__main__":
-    filename = sys.argv[1] if len(sys.argv) > 1 else "lab1_DS.csv"
-    main(filename)
+    filename = get_filename()
+    try:
+        main(filename)
+    except FileNotFoundError:
+        print(f"Файл {filename} не найден.")
+        sys.exit(1)
