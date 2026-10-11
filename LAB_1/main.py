@@ -34,12 +34,12 @@ def choose_columns(headers):
 
     print("Доступные столбцы:")
     for i, h in enumerate(headers):
-        print(f"  {i}: {h}")
+        print(f"{i}: {h}")
 
     while True:
         try:
-            xi = int(input("Введите номер столбца для X: "))
-            yi = int(input("Введите номер столбца для Y: "))
+            xi = int(input("Выберите столбец X: "))
+            yi = int(input("Выберите столбец Y: "))
         except ValueError:
             print("Нужно ввести целое число.")
             continue
